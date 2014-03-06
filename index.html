@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css.css" />
+		<title>Discover beautiful colors</title>	
+	</head>
+	<body onkeydown="test(event)">
+		<script type="text/javascript">
+		var t = "#247e83";
+		document.body.style.backgroundColor = t;
+		var s = t;
+		var store = s;
+		function colorCraze(){
+			store = s;
+			s = genNew();
+			document.body.style.backgroundColor = s;
+			document.getElementById("current").innerHTML = s;
+		}
+		function genNew(){
+			return '#'+ ('000000' + (Math.random()*0xFFFFFF<<0).toString(16)).slice(-6);
+		}
+		function test(e){
+			if (typeof e == 'undefined' && window.event) { e = window.event; }
+        	if (e.keyCode == 39){ // forward arrow
+            	colorCraze();
+        	}
+        	if(e.keyCode == 37){ // Back arrow
+        		restoreCol(store);
+        	}
+        	if(e.keyCode == 38){ // Up arrow
+        		var hexValue = s.replace('#','');
+				hexValue = "0x" + hexValue;
+				
+
+				var p1 = hexValue.slice(2,4);
+				var p2 = hexValue.slice(4,6);
+				var p3 = hexValue.slice(6,8);
+				hexValue = parseInt(hexValue , 16);
+				if(p1 != "ff"){
+					hexValue = hexValue + 0x010000;
+				}
+
+				if(p2 != "ff"){
+					hexValue = hexValue + 0x000100;
+				}
+
+				if(p3 != "ff"){
+					hexValue = hexValue + 0x000001;
+				}
+
+				hexValue = hexValue.toString(16);
+				s = "#"+hexValue;
+				document.body.style.backgroundColor = s;
+				document.getElementById("current").innerHTML = s;
+        	}
+        	if(e.keyCode == 40){
+        		var hexValue = s.replace('#','');
+				hexValue = "0x" + hexValue;
+				
+
+				var p1 = hexValue.slice(2,4);
+				var p2 = hexValue.slice(4,6);
+				var p3 = hexValue.slice(6,8);
+				hexValue = parseInt(hexValue , 16);
+
+				if(p1 != "00"){
+					hexValue = hexValue - 0x010000;
+				}
+
+				if(p2 != "00"){
+					hexValue = hexValue - 0x000100;
+				}
+
+				if(p3 != "00"){
+					hexValue = hexValue - 0x000001;
+				}
+
+				hexValue = hexValue.toString(16);
+				if(hexValue.length < 6) hexValue = Array(6-hexValue.length+1).join("0") + hexValue;
+				s = "#"+hexValue;
+				document.body.style.backgroundColor = s;
+				document.getElementById("current").innerHTML = s;
+        	}
+        	if(e.keyCode == 13){ // Enter
+        		save();
+        		colorCraze();
+        	}
+		}
+		function restoreCol(c){
+			document.body.style.backgroundColor = c;
+			document.getElementById("current").innerHTML = c;
+			s = c;
+		}
+		function restore(e){
+			s=e.innerHTML;
+			document.body.style.backgroundColor = e.innerHTML;
+			document.getElementById("current").innerHTML = e.innerHTML;
+		}
+		function save(){
+			var temp = document.getElementById("saved");
+			temp.innerHTML = "<div onclick='restore(this)' style='font-size:16pt;padding:5px;background:"+s+"'>"+s+"</div>" + temp.innerHTML;
+		}
+		// MAKE CUSTOM CURSOR THAT IS INVISIBLE
+		// DETECT BROWSER, open without navigation (in fullscreen) and imitate the browser
+		// position mouse in the middle of the screen when on the edge. 
+		</script>
+	<div id="current"><div id="intro">Discover beautiful colors.<br/>Press <img src="right.png" style="height:50px" alt="right arrow key"> to generate a random color,<br/> <img src="left.png" style="height:50px" alt="left arrow key"> to go to the previous color,<br/><img src="updown.png" style="height:100px;vertical-align:middle" alt="up and down arrow keys"> to tune the shade and <img src="enter.png" style="height:100px;vertical-align:middle" alt="enter key"> to save the color. Click a color to bring it back. Press <img src="right.png" style="height:50px" alt="right arrow key"> to continue</div></div>
+	<div id="saved"></div>	
+	</body>
+</html>
