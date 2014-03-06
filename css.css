@@ -1,0 +1,14 @@
+body {
+	margin:0;
+	color:white;
+	font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif; font-weight:300; font-stretch:normal; 
+	font-size:100pt;
+}
+
+#intro {
+	font-size:50pt;
+	line-height: 100px;
+	margin:10px 30px 30px 30px;
+	text-shadow: 2px 2px 1px #74bec3;
+
+}
